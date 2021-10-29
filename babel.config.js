@@ -1,15 +1,18 @@
-module.exports = {
-  presets: ["babel-preset-expo"],
-  env: {
-    production: {},
+const presets = ['module:metro-react-native-babel-preset']
+const plugins = []
+
+plugins.push([
+  'module-resolver',
+  {
+    root: ['./src'],
+    extensions: ['.js', '.json'],
+    alias: {
+      '@': './src',
+    },
   },
-  plugins: [
-    [
-      "@babel/plugin-proposal-decorators",
-      {
-        legacy: true,
-      },
-    ],
-    ["@babel/plugin-proposal-optional-catch-binding"],
-  ],
+])
+
+module.exports = {
+  presets,
+  plugins,
 }
