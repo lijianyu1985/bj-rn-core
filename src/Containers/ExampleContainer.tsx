@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import {
-  View,
   ActivityIndicator,
   Text,
   TextInput,
   TouchableOpacity,
   ScrollView,
+  View,
 } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -31,20 +31,18 @@ const ExampleContainer = () => {
     dispatch(changeTheme({ theme, darkMode }))
   }
 
+  console.log(error)
+
   return (
     <ScrollView
       style={Layout.fill}
-      contentContainerStyle={[
-        Layout.fill,
-        Layout.colCenter,
-        Gutters.smallHPadding,
-      ]}
+      contentContainerStyle={[Layout.colCenter, Gutters.smallHPadding]}
     >
       <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
         <Brand />
         {(isLoading || isFetching) && <ActivityIndicator />}
         {!isSuccess ? (
-          <Text style={Fonts.textRegular}>{error}</Text>
+          <Text style={Fonts.textRegular}>{''}</Text>
         ) : (
           <Text style={Fonts.textRegular}>
             {t('example.helloUser', { name: data?.name })}

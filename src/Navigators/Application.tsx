@@ -6,6 +6,7 @@ import { StartupContainer } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
+import AuthNavigator from './Auth'
 
 const Stack = createStackNavigator()
 
@@ -20,6 +21,13 @@ const ApplicationNavigator = () => {
         <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Startup" component={StartupContainer} />
+          <Stack.Screen
+            name="Auth"
+            component={AuthNavigator}
+            options={{
+              animationEnabled: false,
+            }}
+          />
           <Stack.Screen
             name="Main"
             component={MainNavigator}
