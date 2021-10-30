@@ -7,6 +7,7 @@ import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import AuthNavigator from './Auth'
+import FlashMessage from 'react-native-flash-message'
 
 const Stack = createStackNavigator()
 
@@ -37,6 +38,7 @@ const ApplicationNavigator = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      <FlashMessage position="top" />
     </SafeAreaView>
   )
 }

@@ -21,7 +21,7 @@ export const Colors: ThemeColors = {
   inputBackground: '#FFFFFF',
   white: '#ffffff',
   text: '#212529',
-  primary: '#E14032',
+  primary: '#5252ff',
   success: '#28a745',
   error: '#dc3545',
 }

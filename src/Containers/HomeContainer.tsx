@@ -12,7 +12,6 @@ const Container = () => {
       contentContainerStyle={[Layout.colCenter, Gutters.smallHPadding]}
     >
       <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
-        <Brand />
         <Text style={Fonts.textRegular}>Hello World</Text>
       </View>
     </ScrollView>

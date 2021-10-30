@@ -31,7 +31,7 @@ const MainNavigator = () => {
         }}
         component={PersonalContainer}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Todo"
         options={{
           tabBarLabel: 'Todo',
@@ -40,7 +40,7 @@ const MainNavigator = () => {
           ),
         }}
         component={TodoContainer}
-      />
+      /> */}
     </Tab.Navigator>
   )
 }

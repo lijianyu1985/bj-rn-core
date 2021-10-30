@@ -10,7 +10,11 @@ export const todoApi = api.injectEndpoints({
   overrideExisting: false,
 })
 
-export const { useLazyLoginQuery, useLazyVerifyTokenQuery } = todoApi
+export const {
+  useLoginMutation,
+  useVerifyTokenQuery,
+  useLazyVerifyTokenQuery,
+} = todoApi
 
 export type Login = {
   username: string

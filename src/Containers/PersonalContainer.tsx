@@ -5,6 +5,7 @@ import { Brand } from '@/Components'
 import { useTheme } from '@/Hooks'
 import { clearAuth } from '@/Store/Auth'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
+import { Button } from 'react-native-elements'
 
 const PersonalContainer = () => {
   const { Common, Fonts, Gutters, Layout } = useTheme()
@@ -22,14 +23,21 @@ const PersonalContainer = () => {
       contentContainerStyle={[Layout.colCenter, Gutters.smallHPadding]}
     >
       <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
-        <Brand />
-
-        <TouchableOpacity
-          style={[Common.button.outline, Gutters.regularBMargin]}
-          onPress={() => onLogout()}
+        <View
+          style={[
+            Layout.row,
+            Layout.rowHCenter,
+            Gutters.smallHPadding,
+            Gutters.largeVMargin,
+          ]}
         >
-          <Text style={Fonts.textRegular}>Logout</Text>
-        </TouchableOpacity>
+          <Button
+            containerStyle={[Layout.fill]}
+            buttonStyle={[Layout.fill]}
+            title="Logout"
+            onPress={() => onLogout()}
+          />
+        </View>
       </View>
     </ScrollView>
   )
