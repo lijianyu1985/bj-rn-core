@@ -23,4 +23,5 @@ export type Login = {
 
 export type LoginResult = {
   accessToken: string
+  currentAuthority: string[]
 }

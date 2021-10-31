@@ -1,20 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import { View, ActivityIndicator, Text, ScrollView } from 'react-native'
-import { useTranslation } from 'react-i18next'
-import { Brand } from '@/Components'
+import React, { useEffect } from 'react'
+import {
+  View,
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
 import { useTheme } from '@/Hooks'
-import { useLazyFindQuery } from '@/Services/modules/todos'
+import { useLazyFindQuery } from '@/Services/modules/todo'
+import { navigate } from '@/Navigators/utils'
+import { Button, ListItem } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/AntDesign'
 
-const PersonalContainer = () => {
-  const { t } = useTranslation()
-  const { Fonts, Gutters, Layout } = useTheme()
-
-  const [find, { data, isSuccess, isLoading, isFetching, error }] =
-    useLazyFindQuery()
+const TodoContainer = ({ route: { params } }) => {
+  const { Colors, Gutters, Layout } = useTheme()
+  const [find, { data, isLoading, isFetching, isSuccess }] = useLazyFindQuery()
 
   useEffect(() => {
     find()
   }, [find])
+
+  useEffect(() => {
+    if (params && params.needRefresh) {
+      find()
+    }
+  }, [find, params])
 
   return (
     <ScrollView
@@ -22,23 +31,43 @@ const PersonalContainer = () => {
       contentContainerStyle={[Layout.colCenter, Gutters.smallHPadding]}
     >
       <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
-        <Brand />
+        <View style={[Layout.row, Layout.rowHCenter]}>
+          <Button
+            containerStyle={[Layout.fill]}
+            buttonStyle={[Layout.fill]}
+            title="Create"
+            onPress={() => navigate('TodoEdit')}
+          />
+        </View>
         {(isLoading || isFetching) && <ActivityIndicator />}
-        {!isSuccess ? (
-          <Text style={Fonts.textRegular}>{JSON.stringify(error)}</Text>
-        ) : (
-          <Text style={Fonts.textRegular}>
-            {t('example.helloUser', { name: 'data?.name' })}
-          </Text>
-        )}
-        {(data || []).map((x: any) => (
-          <Text key={x._id} style={Fonts.textRegular}>
-            {x.name}
-          </Text>
-        ))}
+        {isSuccess &&
+          (data || []).map(item => (
+            <ListItem
+              key={item.id}
+              containerStyle={[
+                Layout.fullWidth,
+                { backgroundColor: Colors.transparent },
+              ]}
+              style={[Layout.fullWidth]}
+              topDivider
+              bottomDivider
+              Component={TouchableOpacity}
+              onPress={() => {
+                navigate('TodoEdit', item)
+              }}
+              hasTVPreferredFocus={undefined}
+              tvParallaxProperties={undefined}
+            >
+              <Icon name="checkcircleo" />
+              <ListItem.Content>
+                <ListItem.Title>{item.name}</ListItem.Title>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          ))}
       </View>
     </ScrollView>
   )
 }
 
-export default PersonalContainer
+export default TodoContainer

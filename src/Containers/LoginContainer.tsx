@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { useTheme } from '@/Hooks'
 import { useLoginMutation } from '@/Services/modules/auth'
 import { useDispatch } from 'react-redux'
@@ -8,9 +8,10 @@ import { navigateAndSimpleReset } from '@/Navigators/utils'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { Input } from 'react-native-elements'
 import { Button } from 'react-native-elements'
+import { Brand } from '@/Components'
 
 const Container = () => {
-  const { Common, Gutters, Fonts, Layout } = useTheme()
+  const { Gutters, Layout } = useTheme()
   const [username, setUsername] = useState('admin')
   const [password, setPassword] = useState('Li@12345678')
 
@@ -24,7 +25,12 @@ const Container = () => {
 
   useEffect(() => {
     if (data && data.accessToken) {
-      dispatch(setAuth({ accessToken: data.accessToken }))
+      dispatch(
+        setAuth({
+          accessToken: data.accessToken,
+          currentAuthority: data.currentAuthority,
+        }),
+      )
       navigateAndSimpleReset('Main')
     }
   }, [data, dispatch])
@@ -34,11 +40,8 @@ const Container = () => {
       style={Layout.fill}
       contentContainerStyle={[Layout.colCenter, Gutters.smallHPadding]}
     >
-      <View
-        style={[
-          [Layout.colCenter, Gutters.smallHPadding, { marginTop: '20%' }],
-        ]}
-      >
+      <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
+        <Brand />
         <View
           style={[
             Layout.row,

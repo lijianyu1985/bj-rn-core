@@ -1,7 +1,5 @@
 import { TimeoutError } from '@/Common/Errors'
 import { Config } from '@/Config'
-import { navigateAndSimpleReset } from '@/Navigators/utils'
-import { clearAuth, setAuth } from '@/Store/Auth'
 import {
   BaseQueryFn,
   FetchArgs,
@@ -51,27 +49,31 @@ const baseQuery = fetchBaseQuery({
   },
 })
 
-//getToken
-
 const baseQueryWithInterceptor: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
+  console.log(args)
   let result = await baseQuery(args, api, extraOptions)
-  if (result.error && result.error.status === 401) {
-    // logout and redirect to login
-    clearAuth()
-    navigateAndSimpleReset('Auth')
-    return false
-  }
   if (result.error) {
+    if (result.error.status === 401 || result.error.status === 403) {
+      //toast
+      showMessage({
+        message: "You don't have permission",
+        type: 'danger',
+      })
+      // return false
+    }
     //toast
+    const errMsg =
+      (result.error as any).error ||
+      ((result.error as any).data && (result.error as any).data.message)
     showMessage({
-      message: (result.error as any).error,
+      message: errMsg,
       type: 'danger',
     })
-    throw (result.error as any).error
+    throw errMsg
   }
 
   return result.data || {}

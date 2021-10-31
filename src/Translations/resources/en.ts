@@ -1,5 +1,5 @@
 export default {
-  welcome: 'Welcome to React Native BJRNCORE by TheCodingMachine',
+  welcome: 'Welcome to LJY',
   actions: {
     continue: 'Continue',
   },

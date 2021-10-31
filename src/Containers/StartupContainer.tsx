@@ -5,7 +5,9 @@ import { useTheme } from '@/Hooks'
 import { Brand } from '@/Components'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { useLazyVerifyTokenQuery } from '@/Services/modules/auth'
-import { showMessage } from 'react-native-flash-message'
+import { clearAuth } from '@/Store/Auth'
+import { store } from '@/Store'
+import { useDispatch } from 'react-redux'
 
 const StartupContainer = () => {
   const { Layout, Gutters, Fonts } = useTheme()
@@ -13,9 +15,18 @@ const StartupContainer = () => {
   const { t } = useTranslation()
 
   const [verifyToken, { data, error }] = useLazyVerifyTokenQuery()
-  
+
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    verifyToken()
+    const auth = store.getState().auth
+    if (auth && auth.accessToken) {
+      verifyToken()
+    } else {
+      setTimeout(() => {
+        navigateAndSimpleReset('Auth')
+      }, 100)
+    }
   }, [verifyToken])
 
   // const init = async () => {
@@ -32,14 +43,20 @@ const StartupContainer = () => {
     if (data === true) {
       navigateAndSimpleReset('Main')
     }
-  }, [data])
-  useEffect(() => {
-    console.log(error)
-    if (error) {
-      //TODO: go to a error page
+    if (data === false) {
+      // logout and redirect to login
+      dispatch(clearAuth())
       navigateAndSimpleReset('Auth')
     }
-  }, [error])
+  }, [data, dispatch])
+  useEffect(() => {
+    if (error) {
+      //TODO: go to a error page
+      dispatch(clearAuth())
+      navigateAndSimpleReset('Auth')
+    }
+  }, [error, dispatch])
+
   return (
     <View style={[Layout.fill, Layout.colCenter]}>
       <Brand />

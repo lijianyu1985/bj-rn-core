@@ -1,48 +1,59 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { HomeContainer } from '@/Containers'
-import PersonalContainer from '@/Containers/PersonalContainer'
+import { ErrorContainer, HomeContainer } from '@/Containers'
 import AntDesignIcons from 'react-native-vector-icons/AntDesign'
-import TodoContainer from '@/Containers/TodoContainer'
+import { checkPermission } from './utils'
+import { createStackNavigator } from '@react-navigation/stack'
+import PersonalNavigator from './PersonalNavigator'
+
+const Stack = createStackNavigator()
 
 const Tab = createBottomTabNavigator()
 
+const ErrorScreen = (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Error" component={ErrorContainer} />
+  </Stack.Navigator>
+)
+
+export const screens = [
+  {
+    name: 'Home',
+    label: 'Home',
+    icon: 'home',
+    component: HomeContainer,
+  },
+  {
+    name: 'Personal',
+    label: 'Personal',
+    icon: 'user',
+    component: PersonalNavigator,
+  },
+]
+
 // @refresh reset
 const MainNavigator = () => {
-  return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesignIcons name="home" color={color} size={size} />
-          ),
-        }}
-        component={HomeContainer}
-      />
-      <Tab.Screen
-        name="Personal"
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesignIcons name="user" color={color} size={size} />
-          ),
-        }}
-        component={PersonalContainer}
-      />
-      {/* <Tab.Screen
-        name="Todo"
-        options={{
-          tabBarLabel: 'Todo',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesignIcons name="user" color={color} size={size} />
-          ),
-        }}
-        component={TodoContainer}
-      /> */}
-    </Tab.Navigator>
-  )
+  const mainScreens = checkPermission(screens)
+  if (mainScreens && mainScreens.length) {
+    return (
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        {mainScreens.map(x => (
+          <Tab.Screen
+            key={x.name}
+            name={x.name}
+            options={{
+              tabBarLabel: x.label,
+              tabBarIcon: ({ color, size }) => (
+                <AntDesignIcons name={x.icon} color={color} size={size} />
+              ),
+            }}
+            component={x.component}
+          />
+        ))}
+      </Tab.Navigator>
+    )
+  }
+  return ErrorScreen
 }
 
 export default MainNavigator
