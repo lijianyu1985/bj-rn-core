@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native'
 import { useTheme } from '@/Hooks'
 import { useUpdateMutation, useCreateMutation } from '@/Services/modules/todo'
 import { goBack } from '@/Navigators/utils'
-import { Button, Input } from 'react-native-elements'
+import { Button, TextField } from 'react-native-ui-lib'
 
 const TodoEditContainer = ({ route: { params } }) => {
   const { Gutters, Layout } = useTheme()
@@ -32,7 +32,7 @@ const TodoEditContainer = ({ route: { params } }) => {
     >
       <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
         <View style={[Layout.row, Layout.rowHCenter, Gutters.largeVMargin]}>
-          <Input
+          <TextField
             placeholder="Name"
             autoCompleteType={undefined}
             onChangeText={setName}
@@ -42,12 +42,7 @@ const TodoEditContainer = ({ route: { params } }) => {
           />
         </View>
         <View style={[Layout.row, Layout.rowHCenter]}>
-          <Button
-            containerStyle={[Layout.fill]}
-            buttonStyle={[Layout.fill]}
-            title="Save"
-            onPress={() => onSave()}
-          />
+          <Button style={[Layout.fill]} label="Save" onPress={() => onSave()} />
         </View>
       </View>
     </ScrollView>

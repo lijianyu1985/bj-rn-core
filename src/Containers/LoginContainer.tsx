@@ -6,8 +6,7 @@ import { useDispatch } from 'react-redux'
 import { setAuth } from '@/Store/Auth'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import Icon from 'react-native-vector-icons/AntDesign'
-import { Input } from 'react-native-elements'
-import { Button } from 'react-native-elements'
+import { Button, TextField } from 'react-native-ui-lib'
 import { Brand } from '@/Components'
 
 const Container = () => {
@@ -50,7 +49,7 @@ const Container = () => {
             Gutters.largeVMargin,
           ]}
         >
-          <Input
+          <TextField
             placeholder="Username"
             autoCompleteType={undefined}
             onChangeText={setUsername}
@@ -70,7 +69,7 @@ const Container = () => {
             Gutters.largeVMargin,
           ]}
         >
-          <Input
+          <TextField
             placeholder="Password"
             secureTextEntry={true}
             autoCompleteType={undefined}
@@ -78,7 +77,6 @@ const Container = () => {
             editable={!isLoading}
             value={password}
             selectTextOnFocus
-            style={[Layout.fill]}
             leftIcon={<Icon name="lock" size={24} color="black" />}
           />
         </View>
@@ -92,9 +90,8 @@ const Container = () => {
           ]}
         >
           <Button
-            containerStyle={[Layout.fill]}
-            buttonStyle={[Layout.fill]}
-            title="Login"
+            style={[Layout.fill]}
+            label="Login"
             onPress={() => onLogin()}
           />
         </View>

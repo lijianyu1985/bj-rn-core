@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useTheme } from '@/Hooks'
 import { clearAuth } from '@/Store/Auth'
 import { navigate, navigateAndSimpleReset } from '@/Navigators/utils'
-import { Avatar, ListItem } from 'react-native-elements'
+import { Avatar, ListItem } from 'react-native-ui-lib'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { useUploadMutation } from '@/Services/modules/file'
@@ -77,7 +77,7 @@ const PersonalContainer = () => {
   return (
     <ScrollView style={Layout.fill} contentContainerStyle={[Layout.colCenter]}>
       <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
-        <Avatar
+        {/* <Avatar
           size="large"
           rounded
           source={
@@ -99,10 +99,10 @@ const PersonalContainer = () => {
             }}
             size={20}
           />
-        </Avatar>
+        </Avatar> */}
       </View>
       <View style={[{ marginTop: 30 }]}>
-        <ListItem
+        {/* <ListItem
           containerStyle={[
             Layout.fullWidth,
             { backgroundColor: Colors.transparent },
@@ -141,7 +141,7 @@ const PersonalContainer = () => {
             <ListItem.Title>Logout</ListItem.Title>
           </ListItem.Content>
           <ListItem.Chevron />
-        </ListItem>
+        </ListItem> */}
       </View>
     </ScrollView>
   )

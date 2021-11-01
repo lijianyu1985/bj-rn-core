@@ -4,7 +4,7 @@ import { useTheme } from '@/Hooks'
 import { useDispatch } from 'react-redux'
 import { clearAuth } from '@/Store/Auth'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-ui-lib'
 
 const Container = () => {
   const { Fonts, Gutters, Layout } = useTheme()
@@ -36,9 +36,8 @@ const Container = () => {
           ]}
         >
           <Button
-            containerStyle={[Layout.fill]}
-            buttonStyle={[Layout.fill]}
-            title="Logout"
+            style={[Layout.fill]}
+            label="Logout"
             onPress={() => onLogout()}
           />
         </View>
